@@ -1,5 +1,3 @@
-<?php $_SESSION['register-user-success'] = 'User registration successful. Log in now!';
-?>
 <div class="grid mx-auto gap-6 p-6 max-w-sm border border-neutral-300 dark:border-white/20 rounded-md">
 	<h2 class="font-bold text-3xl">Login</h2>
 

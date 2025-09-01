@@ -5,12 +5,18 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../models/UserModel.php';
+require_once __DIR__ . '/../helpers/current_user_id.php';
 
 class Controller {
 	protected $userModel;
+	protected $currentUser;
 
 	public function __construct($pdo) {
 		$this->userModel = new UserModel($pdo);
+
+		if ( currentUserId() ) {
+			$this->currentUser = $this->userModel->getUserById( currentUserId() );
+		}
 	}
 
 	// check if the user is logged in
@@ -23,6 +29,7 @@ class Controller {
 
 	// render the view
 	protected function render($viewName, $data = []) {
+		$data['currentUser'] = $this->currentUser;
 		extract($data, EXTR_SKIP);
 
 		ob_start();

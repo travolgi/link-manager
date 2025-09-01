@@ -39,7 +39,6 @@ class BoardController extends Controller {
 
 		$board = $this->boardModel->createBoard($user_id, $boardName);
 
-
 		if ( $board ) {
 			$_SESSION['board-crud-success'] = 'Board successfully created.';
 			header('Location: index.php?action=showBoards');

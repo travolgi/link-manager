@@ -35,6 +35,10 @@
 					</div>
 				</div>
 			<?php endforeach; ?>
+
+			<div class="border border-neutral-300 dark:border-white/20 p-4 rounded-md">
+				<h3 class="font-semibold text-xl mb-4">General</h3>
+			</div>
 		<?php endif; ?>
 	</div>
 
@@ -44,7 +48,7 @@
 			type="text"
 			name="name"
 			id="name"
-			placeholder="Board Name"
+			placeholder="Enter Board Name"
 			required
 		/>
 

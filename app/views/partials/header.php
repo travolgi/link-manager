@@ -25,6 +25,15 @@
 						<a href="index.php?action=dashboard">Dashboard</a>
 					</li>
 					<li>
+						<a href="index.php?action=showBoards">Boards</a>
+					</li>
+					<li>
+						<a href="#">
+							<i class="fa-light fa-user px-2"></i>
+							User: <?= htmlspecialchars( $currentUser['username'] ) ?>
+						</a>
+					</li>
+					<li>
 						<a href="index.php?action=logout">Logout</a>
 					</li>
 				<?php else : ?>
@@ -35,16 +44,13 @@
 						</a>
 					</li>
 				<?php endif; ?>
-
-				<li id="ui-theme">
-					<i class="fa-light fa-sun px-2 hidden dark:block"></i>
-					<i class="fa-light fa-moon px-2 dark:hidden"></i>
-				</li>
 			</ul>
 		</nav>
-		
-		<span>Sessione utente: <?= $_SESSION['user_id'] ?? 'none' ?></span>
 
+		<button id="ui-theme">
+			<i class="fa-light fa-sun px-2 hidden dark:block"></i>
+			<i class="fa-light fa-moon px-2 dark:hidden"></i>
+		</button>
 	</header>
 
 	<main class="min-h-[80vh] py-18 px-4">

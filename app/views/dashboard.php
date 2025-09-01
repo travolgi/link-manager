@@ -1,5 +1,5 @@
 <div class="space-y-6">
-	<h2 class="font-bold text-3xl">Welcome, <?= htmlspecialchars( $user['username'] ) ?>!</h2>
+	<h2 class="font-bold text-3xl">Welcome, <?= htmlspecialchars( $currentUser['username'] ) ?>!</h2>
 	
 	<p>This is your dashboard.</p>
 	
