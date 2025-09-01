@@ -1,0 +1,52 @@
+/*
+Run CLI build:
+
+npx @tailwindcss/cli -i ./public/assets/css/input.css -o ./public/assets/css/style.css --watch
+*/
+
+@import './fontawesome.min.css' layer(vendor);
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer components {
+	input {
+		padding: --spacing(2);
+		margin-bottom: --spacing(4);
+		border-radius: var(--radius-md);
+		border: 1px var(--tw-border-style) ;
+		border-color: var(--color-neutral-300);
+		outline: none;
+		transition-property: all;
+		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+		transition-duration: var(--tw-duration, var(--default-transition-duration));
+
+		@variant hover {
+			border-color: var(--color-teal-300);
+		}
+		@variant focus {
+			border-color: var(--color-teal-600);
+		}
+		@variant dark {
+			border-color: color-mix(in srgb, #fff 20%, transparent);
+		}
+	}
+
+
+	.btn {
+		font-weight: var(--font-weight-semibold);
+		display: inline-block;
+		padding: --spacing(2) --spacing(4);
+		border-radius: var(--radius-md);
+		color: var(--color-white);
+		background: var(--color-teal-600);
+		transition-property: all;
+		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+		transition-duration: var(--tw-duration, var(--default-transition-duration));
+
+		@variant hover {
+			background: var(--color-teal-800);
+		}
+	}
+}
