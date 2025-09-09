@@ -93,7 +93,8 @@ class BoardModel extends Model {
 		$sql = '
 			UPDATE boards 
 			SET name = :name, slug = :slug, updated_at = NOW()
-			WHERE id = :id AND user_id = :user_id
+			WHERE id = :id 
+			AND user_id = :user_id
 		';
 		$params = [
 			'id' => $id,
@@ -109,7 +110,9 @@ class BoardModel extends Model {
 	public function deleteBoard($id, $user_id) {
 		$sql = '
 			DELETE FROM boards 
-			WHERE id = :id AND user_id = :user_id
+			WHERE id = :id 
+			AND user_id = :user_id
+			LIMIT 1
 		';
 		$params = [
 			'id' => $id,

@@ -5,5 +5,7 @@
 	
 	<a href="index.php?action=showBoards" class="btn">All Boards</a>
 	
+	<a href="index.php?action=showLinks" class="btn">All Links</a>
+	
 	<a href="index.php?action=logout" class="block">Logout</a>
 </div>

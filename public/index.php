@@ -3,10 +3,12 @@ require_once __DIR__ . '/../app/config/db.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php';
 require_once __DIR__ . '/../app/controllers/DashboardController.php';
 require_once __DIR__ . '/../app/controllers/BoardController.php';
+require_once __DIR__ . '/../app/controllers/LinkController.php';
 
 $authController = new AuthController($pdo);
 $dashboardController = new DashboardController($pdo);
 $boardController = new BoardController($pdo);
+$linkController = new LinkController($pdo);
 
 $action = $_GET['action'] ?? '';
 
@@ -81,6 +83,38 @@ switch ($action) {
 			$boardController->deleteBoard();
 		} else {
 			header('Location: index.php?action=showBoards');
+		}
+		break;
+
+	case 'showLinks':
+		$linkController->showLinks();
+		break;
+
+	case 'storeLink':
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST') {
+			$linkController->storeLink();
+		} else {
+			header('Location: index.php?action=showLinks');
+		}
+		break;
+
+	case 'editLink':
+		$linkController->editLink();
+		break;
+
+	case 'updateLink':
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			$linkController->updateLink();
+		} else {
+			header('Location: index.php?action=editLink');
+		}
+		break;
+
+	case 'deleteLink':
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
+			$linkController->deleteLink();
+		} else {
+			header('Location: index.php?action=showLinks');
 		}
 		break;
 

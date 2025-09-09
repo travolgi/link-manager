@@ -17,26 +17,25 @@
 		<?php else : ?>
 			<?php foreach ($boards as $board) : ?>
 				<div class="border border-neutral-300 dark:border-white/20 p-4 rounded-md">
-					<div class="flex items-center justify-between gap-4 mb-4">
+					<div class="grid grid-cols-[1fr_1rem_1rem] items-center justify-between gap-4 mb-4">
 						<h3 class="font-semibold text-xl"><?= htmlspecialchars($board['name']) ?></h3>
 
-						<div class="grid grid-cols-2 gap-4">
-							<a href="index.php?action=editBoard&id=<?= $board['id']; ?>" title="Edit">
-								<i class="fa-light fa-pen"></i>
-							</a>
+						<a href="index.php?action=editBoard&id=<?= $board['id']; ?>" title="Edit">
+							<i class="fa-light fa-pen"></i>
+						</a>
 
-							<form action="index.php?action=deleteBoard" method="POST">
-								<input type="hidden" name="id" value="<?= $board['id'] ?>">
-								<button type="submit" title="Delete">
-									<i class="fa-light fa-trash text-red-300 hover:text-red-600"></i>
-								</button>
-							</form>
-						</div>
+						<form action="index.php?action=deleteBoard" method="POST" 
+						onsubmit="return confirm('Are you sure you want to delete this board?')">
+							<input type="hidden" name="id" value="<?= $board['id'] ?>">
+							<button type="submit" title="Delete">
+								<i class="fa-light fa-trash text-red-300 hover:text-red-600"></i>
+							</button>
+						</form>
 					</div>
 				</div>
 			<?php endforeach; ?>
 
-			<div class="border border-neutral-300 dark:border-white/20 p-4 rounded-md">
+			<div class="border border-neutral-300 dark:border-white/20 bg-neutral-800/5 dark:bg-white/5 p-4 rounded-md">
 				<h3 class="font-semibold text-xl mb-4">General</h3>
 			</div>
 		<?php endif; ?>

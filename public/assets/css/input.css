@@ -11,7 +11,9 @@ npx @tailwindcss/cli -i ./public/assets/css/input.css -o ./public/assets/css/sty
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer components {
-	input {
+	input,
+	select,
+	textarea {
 		padding: --spacing(2);
 		margin-bottom: --spacing(4);
 		border-radius: var(--radius-md);
@@ -32,7 +34,6 @@ npx @tailwindcss/cli -i ./public/assets/css/input.css -o ./public/assets/css/sty
 			border-color: color-mix(in srgb, #fff 20%, transparent);
 		}
 	}
-
 
 	.btn {
 		font-weight: var(--font-weight-semibold);

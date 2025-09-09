@@ -28,6 +28,9 @@
 						<a href="index.php?action=showBoards">Boards</a>
 					</li>
 					<li>
+						<a href="index.php?action=showLinks">Links</a>
+					</li>
+					<li>
 						<a href="#">
 							<i class="fa-light fa-user px-2"></i>
 							User: <?= htmlspecialchars( $currentUser['username'] ) ?>
