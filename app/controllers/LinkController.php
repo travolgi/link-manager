@@ -14,11 +14,20 @@ class LinkController extends Controller {
 		$this->boardModel = new BoardModel($pdo);
 	}
 
+	public function validateUrlLink($url) {
+		if ( $url && !preg_match('~^https?://~i', $url) ) {
+			$url = "http://$url";
+		}
+		return filter_var($url, FILTER_SANITIZE_URL);
+	}
+
 	public function showLinks($error = null) {
 		$this->requireLogin();
 
-		$boards = $this->boardModel->getBoardsByUser( currentUserId() );
-		$links = $this->linkModel->getLinksByUser( currentUserId() );
+		$user_id = $this->currentUserId;
+
+		$boards = $this->boardModel->getBoardsByUser( $user_id );
+		$links = $this->linkModel->getLinksByUser( $user_id );
 
 		$this->render('links', [
 			'error' => $error, 
@@ -42,17 +51,20 @@ class LinkController extends Controller {
 		$this->requireLogin();
 
 		$title = trim($_POST['title'] ?? '');
-		$url = filter_var( trim($_POST['url']), FILTER_SANITIZE_URL );
+		$url = $this->validateUrlLink( trim($_POST['url'] ?? '') );
 		$description = trim($_POST['description'] ?? '');
 		$board_id = (int) $_POST['board'] ?? 0;
-		$user_id = $this->currentUser['id'];
 
-		if ( $title === '' || $url === '' ) {
-			$this->showLinks('Title and Url fields are required.');
+		if (!filter_var($url, FILTER_VALIDATE_URL)) {
+			$this->showLinks('Invalid URL format.');
+			exit;
+		}
+		if ( $title === '' ) {
+			$this->showLinks('Title fields is required.');
 			exit;
 		}
 
-		$link = $this->linkModel->createLink( $user_id, $title, $url, $description, $board_id );
+		$link = $this->linkModel->createLink( $this->currentUserId, $title, $url, $description, $board_id );
 
 		if ( $link ) {
 			$_SESSION['link-crud-success'] = 'Link successfully created.';
@@ -68,7 +80,7 @@ class LinkController extends Controller {
 		$this->requireLogin();
 
 		$linkId = (int) $_GET['id'] ?? 0;
-		$user_id = $this->currentUser['id'];
+		$user_id = $this->currentUserId;
 
 		if ( !$linkId ) {
 			$this->showLinks('ID link missing.');
@@ -76,7 +88,7 @@ class LinkController extends Controller {
 		}
 
 		$link = $this->linkModel->getLinkById( $linkId, $user_id );
-		$boards = $this->boardModel->getBoardsByUser( currentUserId() );
+		$boards = $this->boardModel->getBoardsByUser( $user_id );
 
 		if ( !$link ) {
 			$this->showLinks('No link found.');
@@ -92,29 +104,42 @@ class LinkController extends Controller {
 
 		$id = (int) $_POST['id'] ?? 0;
 		$title = trim($_POST['title'] ?? '');
-		$url = filter_var( trim($_POST['url']), FILTER_SANITIZE_URL );
+		$url = $this->validateUrlLink( trim($_POST['url'] ?? '') );
 		$description = trim($_POST['description'] ?? '');
 		$board_id = (int) $_POST['board'] ?? 0;
-		$user_id = $this->currentUser['id'];
 
 		if ( !$id ) {
 			$this->showLinks('ID board missing.');
 			exit;
 		}
 
-		if ( $title === '' || $url === '' ) {
-			header("Location: index.php?action=editLink&id=$id&error=Title%20and%20Url%20fields%20are%20required.");
-			exit;
+		$errors = [];
+		if ( $title === '' ) {
+			$errors['title'] = 'Title fields is required.';
 		}
+		if ( !filter_var($url, FILTER_VALIDATE_URL) ) {
+			$errors['url'] = 'Invalid URL format.';
+		}
+		if ( !empty($errors) ) {
+			$_SESSION['errors'] = $errors;
+			$_SESSION['old'] = $_POST;
+ 
+			header("Location: index.php?action=editLink&id=$id");
+			exit;
+	  	}
 
-		$updated = $this->linkModel->updateLink($id, $title, $url, $description, $board_id, $user_id);
+		$updated = $this->linkModel->updateLink( $id, $title, $url, $description, $board_id, $this->currentUserId );
 
 		if ( $updated ) {
 			$_SESSION['link-crud-success'] = 'Link successfully updated.';
 			header('Location: index.php?action=showLinks');
 			exit;
 		} else {
-			header("Location: index.php?action=editLink&id=$id&error=Update%20error.");
+			$_SESSION['errors'] = ['Update error.'];
+			$_SESSION['old'] = $_POST;
+
+			header("Location: index.php?action=editLink&id=$id");
+			exit;
 		}
 	}
 
@@ -123,14 +148,13 @@ class LinkController extends Controller {
 		$this->requireLogin();
 
 		$linkId = (int) $_POST['id'] ?? 0;
-		$user_id = $this->currentUser['id'];
 
 		if ( !$linkId ) {
 			$this->showLinks('ID link missing.');
 			exit;
 		}
 
-		$deleted = $this->linkModel->deleteLink($user_id, $linkId);
+		$deleted = $this->linkModel->deleteLink( $this->currentUserId, $linkId );
 
 		if ( $deleted ) {
 			$_SESSION['link-crud-success'] = 'Link successfully deleted.';

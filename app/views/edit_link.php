@@ -2,8 +2,12 @@
 
 <h2 class="font-bold text-3xl mt-4 mb-6">Edit Link</h2>
 
-<?php if( isset($error) ) : ?>
-	<p class="text-red-600 mb-6"><?= $error ?></p>
+<?php if( isset($_SESSION['errors']) ) : ?>
+	<p class="text-red-600 mb-6"><?= join( "<br>", $_SESSION['errors'] ) ?></p>
+	<?php
+		unset($_SESSION['errors']);
+		unset($_SESSION['old']);
+	?>
 <?php endif; ?>
 
 <form action="index.php?action=updateLink" method="POST" class="grid">
@@ -15,7 +19,7 @@
 		name="title"
 		id="title"
 		placeholder="Enter Title Link"
-		value="<?= $link['title'] ?>"
+		value="<?= htmlspecialchars( $link['title'] ) ?>"
 		required
 	/>
 
@@ -25,7 +29,7 @@
 		name="url"
 		id="url"
 		placeholder="Enter url"
-		value="<?= $link['url'] ?>"
+		value="<?= htmlspecialchars( $link['url'] ) ?>"
 		required
 	/>
 
@@ -35,7 +39,7 @@
 		name="description"
 		id="description"
 		placeholder="Enter Description Link"
-	><?= $link['description'] ?></textarea>
+	><?= htmlspecialchars( $link['description']) ?></textarea>
 
 	<label for="board">Board:</label>
 	<select
@@ -46,7 +50,12 @@
 		<option value="null" <?php if ( !$link['board_id'] ) echo 'selected'; ?>>None</option>
 		<?php if ( !empty($boards) ) : ?>
 			<?php foreach($boards as $board) : ?>
-				<option value="<?= $board['id'] ?>" <?php if ( $link['board_id'] == $board['id'] ) echo 'selected'; ?>><?= htmlspecialchars( $board['name'] ) ?></option>
+				<option
+					value="<?= $board['id'] ?>"
+					<?php if ( $link['board_id'] == $board['id'] ) echo 'selected'; ?>
+				>
+					<?= htmlspecialchars( $board['name'] ) ?>
+			</option>
 			<?php endforeach; ?>
 		<?php endif; ?>
 	</select>

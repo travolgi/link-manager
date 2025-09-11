@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../core/Controller.php';
 require_once __DIR__ . '/../models/BoardModel.php';
-require_once __DIR__ . '/../helpers/current_user_id.php';
 
 class BoardController extends Controller {
 	protected $boardModel;
@@ -14,7 +13,7 @@ class BoardController extends Controller {
 	public function showBoards($error = null) {
 		$this->requireLogin();
 
-		$boards = $this->boardModel->getBoardsByUser( currentUserId() );
+		$boards = $this->boardModel->getBoardsByUser( $this->currentUserId );
 
 		$this->render('boards', ['error' => $error, 'boards' => $boards]);
 	}
@@ -30,14 +29,13 @@ class BoardController extends Controller {
 		$this->requireLogin();
 
 		$boardName = trim($_POST['name'] ?? '');
-		$user_id = currentUserId();
 
 		if ( $boardName === '' ) {
 			$this->showBoards('Board name fields is required.');
 			exit;
 		}
 
-		$board = $this->boardModel->createBoard($user_id, $boardName);
+		$board = $this->boardModel->createBoard( $this->currentUserId, $boardName );
 
 		if ( $board ) {
 			$_SESSION['board-crud-success'] = 'Board successfully created.';
@@ -54,14 +52,13 @@ class BoardController extends Controller {
 
 		$id = (int) $_GET['id'] ?? 0;
 		$error = $_GET['error'] ?? null;
-		$user_id = currentUserId();
 
 		if ( !$id ) {
 			$this->showBoards('ID Board missing.');
 			exit;
 		}
 
-		$board = $this->boardModel->getBoardById($id, $user_id);
+		$board = $this->boardModel->getBoardById( $id, $this->currentUserId );
 
 		if ( !$board ) {
 			$this->showBoards('No board found.');
@@ -77,25 +74,35 @@ class BoardController extends Controller {
 
 		$boardId = (int) $_POST['id'] ?? 0;
 		$boardName = trim($_POST['name'] ?? '');
-		$user_id = currentUserId();
 
 		if ( !$boardId ) {
 			$this->showBoards('ID board missing.');
 			exit;
 		}
+		$errors = [];
 		if ( $boardName === '' ) {
-			header("Location: index.php?action=editBoard&id=$boardId&error=Board%20name%20fields%20is%20required.");
-			exit;
+			$errors['name'] = 'Board name fields is required.';
 		}
+		if ( !empty($errors) ) {
+			$_SESSION['errors'] = $errors;
+			$_SESSION['old'] = $_POST;
+ 
+			header("Location: index.php?action=editBoard&id=$boardId");
+			exit;
+	  	}
 
-		$board = $this->boardModel->updateBoard($boardId, $boardName, $user_id);
+		$board = $this->boardModel->updateBoard( $boardId, $boardName, $this->currentUserId );
 
 		if ( $board ) {
 			$_SESSION['board-crud-success'] = 'Board successfully updated.';
 			header('Location: index.php?action=showBoards');
 			exit;
 		} else {
-			header("Location: index.php?action=editBoard&id=$boardId&error=Board%20name%20or%20slug%20already%20exists.");
+			$_SESSION['errors'] = ['Board name or slug already exists.'];
+			$_SESSION['old'] = $_POST;
+ 
+			header("Location: index.php?action=editBoard&id=$boardId");
+			exit;
 		}
 	}
 
@@ -104,14 +111,13 @@ class BoardController extends Controller {
 		$this->requireLogin();
 
 		$id = (int) $_POST['id'] ?? 0;
-		$user_id = currentUserId();
 
 		if ( !$id ) {
 			$this->showBoards('ID board missing.');
 			exit;
 		}
 
-		$deleted = $this->boardModel->deleteBoard($id, $user_id);
+		$deleted = $this->boardModel->deleteBoard( $id, $this->currentUserId );
 
 		if ( $deleted ) {
 			$_SESSION['board-crud-success'] = 'Board successfully deleted.';

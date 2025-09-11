@@ -10,12 +10,14 @@ require_once __DIR__ . '/../helpers/current_user_id.php';
 class Controller {
 	protected $userModel;
 	protected $currentUser;
+	protected $currentUserId;
 
 	public function __construct($pdo) {
 		$this->userModel = new UserModel($pdo);
 
 		if ( currentUserId() ) {
 			$this->currentUser = $this->userModel->getUserById( currentUserId() );
+			$this->currentUserId = $this->currentUser['id'];
 		}
 	}
 

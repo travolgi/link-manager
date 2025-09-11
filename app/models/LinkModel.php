@@ -4,10 +4,11 @@ require_once __DIR__ . '/../core/Model.php';
 class LinkModel extends Model {
 	public function getLinksByUser( $user_id ) {
 		$sql = '
-			SELECT * 
+			SELECT links.*, boards.name AS board_name
 			FROM links
-			WHERE user_id = :user_id
-			ORDER BY created_at DESC
+			LEFT JOIN boards ON links.board_id = boards.id
+			WHERE links.user_id = :user_id
+			ORDER BY links.created_at DESC
 		';
 		$params = [ 'user_id' => $user_id];
 		$stmt = $this->dbQuery( $sql, $params );

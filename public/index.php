@@ -5,120 +5,56 @@ require_once __DIR__ . '/../app/controllers/DashboardController.php';
 require_once __DIR__ . '/../app/controllers/BoardController.php';
 require_once __DIR__ . '/../app/controllers/LinkController.php';
 
-$authController = new AuthController($pdo);
-$dashboardController = new DashboardController($pdo);
-$boardController = new BoardController($pdo);
-$linkController = new LinkController($pdo);
+// init
+$controllers = [
+	'auth' => new AuthController($pdo),
+	'dashboard' => new DashboardController($pdo),
+	'board' => new BoardController($pdo),
+	'link' => new LinkController($pdo),
+];
+
+// routing
+$routes = [
+	'showLogin'    => ['auth', 'showLogin', false, 'showDashboard', true],
+	'login'        => ['auth', 'login', true, 'showLogin'],
+	'showRegister' => ['auth', 'showRegister', false, 'showDashboard', true],
+	'register'     => ['auth', 'register', true, 'showRegister'],
+	'logout'       => ['auth', 'logout', false],
+
+	'dashboard'    => ['dashboard', 'showDashboard', false],
+
+	'showBoards'   => ['board', 'showBoards', false],
+	'storeBoard'   => ['board', 'storeBoard', true, 'showBoards'],
+	'editBoard'    => ['board', 'editBoard', false],
+	'updateBoard'  => ['board', 'updateBoard', true, 'editBoard'],
+	'deleteBoard'  => ['board', 'deleteBoard', true, 'showBoards'],
+
+	'showLinks'    => ['link', 'showLinks', false],
+	'storeLink'    => ['link', 'storeLink', true, 'showLinks'],
+	'editLink'     => ['link', 'editLink', false],
+	'updateLink'   => ['link', 'updateLink', true, 'editLink'],
+	'deleteLink'   => ['link', 'deleteLink', true, 'showLinks'],
+];
 
 $action = $_GET['action'] ?? '';
 
-// router
-switch ($action) {
-	case 'showLogin':
-		if ( !isset($_SESSION['user_id']) ) {
-			$authController->showLogin();
-		} else {
-			header('Location: index.php?action=showDashboard');
-		}
-		break;
-
-	case 'login':
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			$authController->login();
-		} else {
-			header('Location: index.php?action=showLogin');
-		}
-		break;
-
-	case 'showRegister':
-		if ( !isset($_SESSION['user_id']) ) {
-			$authController->showRegister();
-		} else {
-			header('Location: index.php?action=showDashboard');
-		}
-		break;
-
-	case 'register':
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			$authController->register();
-		} else {
-			header('Location: index.php?action=showRegister');
-		}
-		break;
-
-	case 'logout':
-		$authController->logout();
-		break;
-
-	case 'dashboard':
-		$dashboardController->showDashboard();
-		break;
-
-	case 'showBoards':
-		$boardController->showBoards();
-		break;
-
-	case 'storeBoard':
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			$boardController->storeBoard();
-		} else {
-			header('Location: index.php?action=showBoards');
-		}
-		break;
-
-	case 'editBoard':
-		$boardController->editBoard();
-		break;
-
-	case 'updateBoard':
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			$boardController->updateBoard();
-		} else {
-			header('Location: index.php?action=editBoard');
-		}
-		break;
-
-	case 'deleteBoard':
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			$boardController->deleteBoard();
-		} else {
-			header('Location: index.php?action=showBoards');
-		}
-		break;
-
-	case 'showLinks':
-		$linkController->showLinks();
-		break;
-
-	case 'storeLink':
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST') {
-			$linkController->storeLink();
-		} else {
-			header('Location: index.php?action=showLinks');
-		}
-		break;
-
-	case 'editLink':
-		$linkController->editLink();
-		break;
-
-	case 'updateLink':
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			$linkController->updateLink();
-		} else {
-			header('Location: index.php?action=editLink');
-		}
-		break;
-
-	case 'deleteLink':
-		if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
-			$linkController->deleteLink();
-		} else {
-			header('Location: index.php?action=showLinks');
-		}
-		break;
-
-	default:
-		$dashboardController->showDashboard();
-		break;
+if ( !isset($routes[$action]) ) {
+	$action = 'dashboard';
 }
+
+list( $controllerKey, $method, $requirePost, $redirect, $guestOnly ) = array_pad($routes[$action], 5, null);
+$controller = $controllers[$controllerKey] ?? null;
+
+// check user
+if ( !empty( $guestOnly ) && isset( $_SESSION['user_id'] ) ) {
+	header('Location: index.php?action=dashboard');
+	exit;
+}
+
+// check POST
+if ( !empty( $requirePost ) && $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
+	header("Location: index.php?action=$redirect");
+	exit;
+}
+
+$controller->$method();

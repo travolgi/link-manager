@@ -17,8 +17,8 @@
 	<?php else :?>
 		<?php foreach ($links as $link) : ?>
 			<div class="border border-neutral-300 dark:border-white/20 p-2 rounded-md">
-				<div class="grid grid-cols-[1fr_1rem_1rem] gap-4">
-					<span><?= htmlspecialchars( $link['title'] ) ?></span>
+				<div class="grid grid-cols-[1fr_1rem_1rem] gap-4 mb-1">
+					<span class="font-semibold text-lg"><?= htmlspecialchars( $link['title'] ) ?></span>
 					
 					<a href="index.php?action=editLink&id=<?= $link['id'] ?>" title="Edit">
 						<i class="fa-light fa-pen"></i>
@@ -32,9 +32,24 @@
 						</button>
 					</form>
 				</div>
-				<em><?= htmlspecialchars( $link['url'] ) ?></em>
-				<p><?= htmlspecialchars( $link['description'] ) ?></p>
-				<span><?= htmlspecialchars( $link['created_at'] ) ?></span>
+				<!--link data	-->
+				<div class="flex flex-col items-start gap-2">
+					<?php $url = htmlspecialchars( $link['url'] ) ?>
+					<a
+						href="<?= $url ?>" 
+						target="_blank" rel="nofollow noopener noreferrer"
+						class="text-teal-600 hover:text-teal-800 italic transition-all"
+					>
+						<?= $url ?>
+					</a>
+					<?php if ( $link['description'] !== '' ) : ?>
+						<p><?= htmlspecialchars( $link['description'] ) ?></p>
+					<?php endif; ?>
+					<?php if ( isset($link['board_name']) ) : ?>
+						<span class="rounded-md bg-teal-600/15 p-1"><?= htmlspecialchars( $link['board_name'] ) ?></span>
+					<?php endif; ?>
+					<span class="text-xs">Created at: <?= $link['created_at'] ?></span>
+				</div>
 			</div>
 		<?php endforeach; ?>
 	<?php endif;?>
