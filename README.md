@@ -12,7 +12,7 @@ This project demonstrates a simple yet structured approach to full-stack develop
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Project structure](#project-structure)
-- [Usage](#usage)
+- [Usage and system logic](#usage-and-system-logic)
 - [Bugs](#bugs)
 - [Future developments](#future-developments)
 - [Contributing](#contributing)
@@ -21,6 +21,7 @@ This project demonstrates a simple yet structured approach to full-stack develop
 
 
 ## Features
+
 - User Registration & Login System (with session handling)
 - Protected Dashboard accessible only to authenticated users
 - Board, Link and Tag Management (create, read, update, delete)
@@ -29,6 +30,7 @@ This project demonstrates a simple yet structured approach to full-stack develop
 
 
 ## Tech Stack
+
 - **PHP 8+** (Backend - Core application logic)
 - **MySQL** (Database - Data storage)
 - **HTML5 / TailwindCSS** (Frontend rendering)
@@ -38,12 +40,14 @@ This project demonstrates a simple yet structured approach to full-stack develop
 
 
 ## Requirements
+
 - PHP >= 8.0
 - MySQL >= 5.7
 - Web server (Apache recommended with `mod_rewrite` enabled)
 
 
 ## Installation
+
 1. Clone the repository:
    ```bash
    git clone https://github.com/travolgi/link-manager.git
@@ -118,17 +122,22 @@ This project demonstrates a simple yet structured approach to full-stack develop
 ```
 
 
-## Usage
+## Usage and system logic
+
 - Register a new account or log in with existing credentials.
 - Access the dashboard to manage your links, tags and boards.
 - Logout when finished.
 
+[UX processes and system logic - FigJam](https://www.figma.com/community/file/1550187983633712159)
+
 
 ## Bugs
+
 Please feel free to create an issue if you see a bug or something unexpected in the app.
 
 
 ## Future developments
+
 - Password reset functionality
 - Link categorization and tags
 - Keyword search, board/tag filters.
@@ -141,6 +150,7 @@ Please feel free to create an issue if you see a bug or something unexpected in 
 
 
 ## Contributing
+
 - Fork the Project
 - Create your Feature Branch (`git checkout -b feature/yourFeature`)
 - Commit your Changes (`git commit -m 'Brief explanation of feature`')
@@ -149,8 +159,10 @@ Please feel free to create an issue if you see a bug or something unexpected in 
 
 
 ## Author
+
 Developed by [Travolgi](https://github.com/travolgi)
 
 
 ## License
+
 This project is licensed under the [MIT license](https://github.com/travolgi/mini-blog/blob/main/LICENSE) - see the LICENSE file for details.
