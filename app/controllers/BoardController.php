@@ -1,21 +1,29 @@
 <?php
 require_once __DIR__ . '/../core/Controller.php';
 require_once __DIR__ . '/../models/BoardModel.php';
+require_once __DIR__ . '/../models/LinkModel.php';
 
 class BoardController extends Controller {
 	protected $boardModel;
+	protected $linkModel;
 
 	public function __construct($pdo) {
 		parent::__construct($pdo);
 		$this->boardModel = new BoardModel($pdo);
+		$this->linkModel = new LinkModel($pdo);
 	}
 
 	public function showBoards($error = null) {
 		$this->requireLogin();
 
 		$boards = $this->boardModel->getBoardsByUser( $this->currentUserId );
+		$boardsLinks = [];
+		foreach ($boards as $board) {
+			$boardsLinks[ $board['id'] ] = $this->linkModel->getLinksByBoard( $this->currentUserId, $board['id'] );
+		}
+		$boardsLinks[ 'null' ] = $this->linkModel->getLinksByBoard( $this->currentUserId );
 
-		$this->render('boards', ['error' => $error, 'boards' => $boards]);
+		$this->render('boards', ['error' => $error, 'boards' => $boards, 'boardsLinks' => $boardsLinks]);
 	}
 
 	public function showEditBoard($board = [], $error = null) {

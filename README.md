@@ -66,6 +66,11 @@ This project demonstrates a simple yet structured approach to full-stack develop
 
 4. Start a local PHP server -> Go to `http://localhost`.
 
+5. Launch TailwindCss Cli from the terminal to make style changes 
+	```
+	npx @tailwindcss/cli -i ./public/assets/css/input.css -o ./public/assets/css/style.css --watch
+	```
+
 
 ## Project Structure
 

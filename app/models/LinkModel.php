@@ -16,6 +16,26 @@ class LinkModel extends Model {
 		return $stmt->fetchAll();
 	}
 
+	public function getLinksByBoard( $user_id, $board_id = null ) {
+		$sql = '
+			SELECT *
+			FROM links
+			WHERE user_id = :user_id 
+		';
+		$params = [ 'user_id' => $user_id ];
+		
+		if ( $board_id === null ) {
+			$sql .= ' AND board_id IS NULL';
+		} else {
+			$sql .= ' AND board_id = :board_id';
+			$params['board_id'] = $board_id;
+		}
+		$sql .= ' ORDER BY created_at DESC';
+		$stmt = $this->dbQuery( $sql, $params );
+
+		return $stmt->fetchAll();
+	}
+
 	public function getLinkById( $id, $user_id ) {
 		$sql = '
 			SELECT * 

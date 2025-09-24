@@ -13,7 +13,7 @@
 
 	<div class="grid md:grid-cols-3 gap-6">
 		<?php if ( empty($boards) ) : ?>
-			<p>No boards.</p>
+			<p class="text-sm text-black/25 dark:text-white/25 italic">No boards.</p>
 		<?php else : ?>
 			<?php foreach ($boards as $board) : ?>
 				<div class="border border-neutral-300 dark:border-white/20 p-4 rounded-md">
@@ -32,11 +32,51 @@
 							</button>
 						</form>
 					</div>
+					<!-- board links -->
+					<ul class="space-y-2">
+						<?php if ( empty( $boardsLinks[$board['id']] ) ) : ?>
+							<li class="text-sm text-black/25 dark:text-white/25 italic">No links yet.</li>
+						<?php else : ?>
+							<?php foreach ($boardsLinks[$board['id']] as $link) : ?>
+								<li>
+									<a
+										href="<?= htmlspecialchars( $link['url'] ) ?>" 
+										target="_blank"
+										rel="nofollow noopener noreferrer"
+										class="hover:text-teal-800 transition-all"
+									>
+										<?= htmlspecialchars( $link['title'] ) ?>
+									</a>
+								</li>
+							<?php endforeach; ?>
+						<?php endif; ?>
+					</ul>
 				</div>
 			<?php endforeach; ?>
 
 			<div class="border border-neutral-300 dark:border-white/20 bg-neutral-800/5 dark:bg-white/5 p-4 rounded-md">
-				<h3 class="font-semibold text-xl mb-4">General</h3>
+				<div class="mb-4">
+					<h3 class="font-semibold text-xl mb-4">General</h3>
+				</div>
+				<!-- links without board -->
+				<ul class="space-y-2">
+					<?php if ( empty( $boardsLinks['null'] ) ) : ?>
+						<li class="text-sm text-black/25 dark:text-white/25 italic">No links yet.</li>
+					<?php else : ?>
+						<?php foreach ($boardsLinks['null'] as $link) : ?>
+							<li>
+								<a
+									href="<?= htmlspecialchars( $link['url'] ) ?>" 
+									target="_blank"
+									rel="nofollow noopener noreferrer"
+									class="hover:text-teal-800 transition-all"
+								>
+									<?= htmlspecialchars( $link['title'] ) ?>
+								</a>
+							</li>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</ul>
 			</div>
 		<?php endif; ?>
 	</div>

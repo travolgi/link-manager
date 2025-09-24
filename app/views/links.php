@@ -13,7 +13,7 @@
 	<div class="space-y-2">
 
 	<?php if ( empty($links) ) : ?>
-		<p>No links.</p>
+		<p class="text-sm text-black/25 dark:text-white/25 italic">No links.</p>
 	<?php else :?>
 		<?php foreach ($links as $link) : ?>
 			<div class="border border-neutral-300 dark:border-white/20 p-2 rounded-md">
@@ -37,7 +37,8 @@
 					<?php $url = htmlspecialchars( $link['url'] ) ?>
 					<a
 						href="<?= $url ?>" 
-						target="_blank" rel="nofollow noopener noreferrer"
+						target="_blank"
+						rel="nofollow noopener noreferrer"
 						class="text-teal-600 hover:text-teal-800 italic transition-all"
 					>
 						<?= $url ?>
