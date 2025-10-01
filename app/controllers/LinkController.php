@@ -54,6 +54,7 @@ class LinkController extends Controller {
 		$url = $this->validateUrlLink( trim($_POST['url'] ?? '') );
 		$description = trim($_POST['description'] ?? '');
 		$board_id = (int) $_POST['board'] ?? 0;
+		$redirect_to = $_POST['redirect_to'] ?? 'links';
 
 		if (!filter_var($url, FILTER_VALIDATE_URL)) {
 			$this->showLinks('Invalid URL format.');
@@ -67,9 +68,16 @@ class LinkController extends Controller {
 		$link = $this->linkModel->createLink( $this->currentUserId, $title, $url, $description, $board_id );
 
 		if ( $link ) {
-			$_SESSION['link-crud-success'] = 'Link successfully created.';
-			header('Location: index.php?action=showLinks');
-			exit;
+			$message = 'Link successfully created.';
+			if ( $redirect_to === 'boards') {
+				$_SESSION['board-crud-success'] = $message;
+				header('Location: index.php?action=showBoards');
+				exit;
+			} else {
+				$_SESSION['link-crud-success'] = $message;
+				header('Location: index.php?action=showLinks');
+				exit;
+			}
 		} else {
 			$this->showLinks('Error.');
 		}

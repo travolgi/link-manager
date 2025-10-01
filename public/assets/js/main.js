@@ -1,5 +1,6 @@
 // Utils
 const getElement = (selector) => document.querySelector(selector);
+const getAllElements = (selector) => document.querySelectorAll(selector);
 const toggleCssClass = (selector, cssClass) => selector.classList.toggle(cssClass);
 
 // Light / Dark UI Theme
@@ -33,3 +34,27 @@ if (uiThemeBtn) {
 
 	uiThemeBtn.addEventListener('click', changeUiTheme);
 }
+
+
+// Modals
+const newlinkModalBtns = getAllElements('.open-newlink-modal');
+const newlinkModal = getElement('#newlink-modal');
+
+const openNewlinkModal = e => {
+	const boardId = e.currentTarget.dataset.boardId;
+	const select = newlinkModal.querySelector('select[name="board"]');
+
+	if (boardId) {
+		select.value = boardId;
+		[...select.options].forEach(opt => opt.selected = (opt.value === boardId));
+	} else {
+		select.value = 'null';
+	}
+
+	toggleCssClass(newlinkModal, '!hidden');
+	
+	const closeNewlinkModalBtn = getElement('#close-newlink-modal');
+	closeNewlinkModalBtn.addEventListener('click', () => newlinkModal.classList.add('!hidden'));
+}
+
+newlinkModalBtns.forEach(btn => btn.addEventListener('click', openNewlinkModal));

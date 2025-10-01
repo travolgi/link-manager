@@ -18,30 +18,33 @@
 		<nav>
 			<ul class="flex items-center gap-4">
 				<li>
-					<a href="/">Home</a>
+					<a href="/" class="hover:text-teal-800 transition-all">Home</a>
 				</li>
 				<?php if ( isset($_SESSION['user_id']) ) : ?>
 					<li>
-						<a href="index.php?action=dashboard">Dashboard</a>
+						<a href="index.php?action=dashboard" class="hover:text-teal-800 transition-all">Dashboard</a>
 					</li>
 					<li>
-						<a href="index.php?action=showBoards">Boards</a>
+						<a href="index.php?action=showBoards" class="hover:text-teal-800 transition-all">Boards</a>
 					</li>
 					<li>
-						<a href="index.php?action=showLinks">Links</a>
+						<a href="index.php?action=showLinks" class="hover:text-teal-800 transition-all">Links</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="#" class="btn open-newlink-modal" data-board-id=""><i class="fa-light fa-plus"></i> New Link</a>
+					</li>
+					<li>
+						<a href="#" class="hover:text-teal-800 transition-all">
 							<i class="fa-light fa-user px-2"></i>
 							User: <?= htmlspecialchars( $currentUser['username'] ) ?>
 						</a>
 					</li>
 					<li>
-						<a href="index.php?action=logout">Logout</a>
+						<a href="index.php?action=logout" class="hover:text-teal-800 transition-all">Logout</a>
 					</li>
 				<?php else : ?>
 					<li>
-						<a href="index.php?action=showLogin">
+						<a href="index.php?action=showLogin" class="hover:text-teal-800 transition-all">
 							<i class="fa-light fa-user px-2"></i>
 							Login
 						</a>

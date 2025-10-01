@@ -1,5 +1,7 @@
 <h2 class="font-bold text-3xl mb-6">Boards</h2>
 
+<?php $redirect_to= 'boards' ?>
+
 <?php if( isset($error) ) : ?>
 	<p class="text-red-600 mb-6"><?= $error ?></p>
 <?php endif; ?>
@@ -51,6 +53,7 @@
 							<?php endforeach; ?>
 						<?php endif; ?>
 					</ul>
+					<button class="text-sm font-semibold opacity-65 hover:text-teal-800 mt-4 transition-all open-newlink-modal" data-board-id="<?= $board['id'] ?>"><i class="fa-light fa-plus"></i> New link</button>
 				</div>
 			<?php endforeach; ?>
 
