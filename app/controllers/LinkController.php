@@ -26,8 +26,11 @@ class LinkController extends Controller {
 
 		$user_id = $this->currentUserId;
 
+		$filter_query = trim($_GET['search'] ?? '');
+		$filter_orderby = $_GET['orderby'] ?? 'DESC';
+
 		$boards = $this->boardModel->getBoardsByUser( $user_id );
-		$links = $this->linkModel->getLinksByUser( $user_id );
+		$links = $this->linkModel->getLinksByUser( $user_id, $filter_query, $filter_orderby );
 
 		$this->render('links', [
 			'error' => $error, 

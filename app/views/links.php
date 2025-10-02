@@ -9,6 +9,10 @@
 	<?php unset($_SESSION['link-crud-success']); ?>
 <?php endif; ?>
 
+<?php 
+require __DIR__ . '/partials/link_filters.php';
+?>
+
 <div class="grid md:grid-cols-2 items-start gap-6">
 	<div class="space-y-2">
 

@@ -2,15 +2,41 @@
 require_once __DIR__ . '/../core/Model.php';
 
 class LinkModel extends Model {
-	public function getLinksByUser( $user_id ) {
+	public function getLinksByUser( $user_id, $query = null, $orderby = null ) {
 		$sql = '
 			SELECT links.*, boards.name AS board_name
 			FROM links
 			LEFT JOIN boards ON links.board_id = boards.id
 			WHERE links.user_id = :user_id
-			ORDER BY links.created_at DESC
 		';
 		$params = [ 'user_id' => $user_id];
+
+		if ( $query ) {
+			$sql .= ' AND (
+				links.title LIKE :q OR
+				links.url LIKE :q OR
+				links.description LIKE :q OR
+				boards.name LIKE :q
+			)';
+			$params['q'] = '%' . $query . '%';
+		}
+
+		switch ($orderby) {
+			case 'ASC':
+				$sql .= ' ORDER BY links.created_at ASC';
+				break;
+			case 'A-Z':
+				$sql .= ' ORDER BY links.title ASC';
+				break;
+			case 'Z-A':
+				$sql .= ' ORDER BY links.title DESC';
+				break;
+			
+			default:
+				$sql .= ' ORDER BY links.created_at DESC';
+				break;
+		}
+
 		$stmt = $this->dbQuery( $sql, $params );
 
 		return $stmt->fetchAll();

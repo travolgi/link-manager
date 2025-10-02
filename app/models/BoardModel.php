@@ -117,7 +117,7 @@ class BoardModel extends Model {
 		$params = [
 			'id' => $id,
 			'user_id' => $user_id
-	];
+		];
 		return $this->dbQuery($sql, $params);
 	}
 }

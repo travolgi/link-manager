@@ -25,6 +25,7 @@ This project demonstrates a simple yet structured approach to full-stack develop
 - User Registration & Login System (with session handling)
 - Protected Dashboard accessible only to authenticated users
 - Board, Link and Tag Management (create, read, update, delete)
+- Keyword search and sorting filters
 - Clean MVC structure for easy maintainability
 - Dark/light UI theme saved on localstorage
 
@@ -78,52 +79,62 @@ This project demonstrates a simple yet structured approach to full-stack develop
 / (root)
 │	├── app/
 |  |  ├── config/
-|  |  |   ├── config.php               # App constant
-|  |  │   └── db.php                   # Database connection
+|  |  |   ├── config.php                     # App constant
+|  |  │   └── db.php                         # Database connection
 |  |  │
 |  |  ├── controllers/
-|  |  │   ├── AuthController.php       # Login/Registration Management
-|  |  │   ├── BoardController.php      # Board Management
-|  |  │   └── DashboardController.php  # Dashboard Management
-|  |  │
-|  |  ├── helpers/
-|  |  │   ├── slugify.php              # Create slug from string
-|  |  │   └── current_user_id.php      # Get current user ID from session
+|  |  │   ├── AuthController.php             # Login/Registration Management
+|  |  │   ├── BoardController.php            # Board Management
+|  |  │   ├── DashboardController.php        # Dashboard Management
+|  |  │   └── LinkController.php             # Link Management
 |  |  │
 |  |  ├── core/
-|  |  │   ├── Controller.php           # Base controller
-|  |  │   └── Model.php                # Base model
+|  |  │   ├── Controller.php                 # Base controller
+|  |  │   └── Model.php                      # Base model
+|  |  │
+|  |  ├── helpers/
+|  |  │   ├── date_format.php                # Format date
+|  |  │   ├── slugify.php                    # Create slug from string
+|  |  │   └── current_user_id.php            # Get current user ID from session
 |  |  │
 |  |  ├── models/
-|  |  │   ├── BoardModel.php           # Board query
-|  |  │   └── UserModel.php       	   # User/Auth query 
+|  |  │   ├── BoardModel.php                 # Board query
+|  |  │   ├── LinkModel.php                  # Link query
+|  |  │   └── UserModel.php       	         # User/Auth query 
 |  |  │
 |  |  └──  views/
-|  |      ├── partials/                # UI components
+|  |      ├── partials/                      # UI components
+|  |      |   ├── field_select_board.php
+|  |      |   ├── field_select_orderby.php
 |  |      |   ├── header.php
-|  |      |   └── footer.php
-|  |      ├── boards.php               # Boards page
-|  |      ├── dashboard.php            # Dashboard page
-|  |      ├── layout.php               # Main layout
-|  |      ├── login.php                # Login page
-|  |      └── register.php             # Register page
+|  |      |   ├── footer.php
+|  |      |   ├── link_filters.php           # Filters component
+|  |      |   └── link_modal.php             # Modal create link
+|  |      ├── boards.php                     # Boards page
+|  |      ├── dashboard.php                  # Dashboard page
+|  |      ├── edit_board.php                 # Edit board page
+|  |      ├── edit_link.php                  # Edit link page
+|  |      ├── layout.php                     # Main layout
+|  |      ├── links.php                      # Links page
+|  |      ├── login.php                      # Login page
+|  |      └── register.php                   # Register page
 |  |   
 │	├── node_modules/
 |  |
 |  └── public/
-│     ├── assets/                      # Static files
-|     |   ├── css                      # css styles
+│     ├── assets/                            # Static files
+|     |   ├── css                            # css styles
 |     |   ├── fonts
 |     |   ├── imgs
-|     |   └── js                       # js scripts
-│     └── index.php                    # Router
+|     |   └── js                             # js scripts
+│     └── index.php                          # Router
 │
 ├── .gitignore
 ├── LICENSE
 ├── package-lock.json
 ├── package.json
 ├── README.md
-└── schema.sql                         # Database SQL schema
+└── schema.sql                               # Database SQL schema
 ```
 
 
@@ -145,8 +156,6 @@ Please feel free to create an issue if you see a bug or something unexpected in 
 
 - Password reset functionality
 - Link categorization and tags
-- Keyword search, board/tag filters.
-- Dynamic sorting by title, date, etc.
 - Async update (fetch) for updates/deletes without reloading.
 - Drag & Drop frontend functionality 
 - Responsive design improvements
