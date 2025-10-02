@@ -18,19 +18,19 @@
 			<p class="text-sm text-black/25 dark:text-white/25 italic">No boards.</p>
 		<?php else : ?>
 			<?php foreach ($boards as $board) : ?>
-				<div class="border border-neutral-300 dark:border-white/20 p-4 rounded-md">
+				<div class="card">
 					<div class="grid grid-cols-[1fr_1rem_1rem] items-center justify-between gap-4 mb-4">
 						<h3 class="font-semibold text-xl"><?= htmlspecialchars($board['name']) ?></h3>
 
 						<a href="index.php?action=editBoard&id=<?= $board['id']; ?>" title="Edit">
-							<i class="fa-light fa-pen"></i>
+							<i class="fa-light fa-pen hover:text-teal-800 transition-all"></i>
 						</a>
 
 						<form action="index.php?action=deleteBoard" method="POST" 
 						onsubmit="return confirm('Are you sure you want to delete this board?')">
 							<input type="hidden" name="id" value="<?= $board['id'] ?>">
 							<button type="submit" title="Delete">
-								<i class="fa-light fa-trash text-red-300 hover:text-red-600"></i>
+								<i class="fa-light fa-trash text-red-300 hover:text-red-600 transition-all"></i>
 							</button>
 						</form>
 					</div>
@@ -53,11 +53,11 @@
 							<?php endforeach; ?>
 						<?php endif; ?>
 					</ul>
-					<button class="text-sm font-semibold opacity-65 hover:text-teal-800 mt-4 transition-all open-newlink-modal" data-board-id="<?= $board['id'] ?>"><i class="fa-light fa-plus"></i> New link</button>
+					<button class="btn-secondary open-newlink-modal" data-board-id="<?= $board['id'] ?>"><i class="fa-light fa-plus"></i> New link</button>
 				</div>
 			<?php endforeach; ?>
 
-			<div class="border border-neutral-300 dark:border-white/20 bg-neutral-800/5 dark:bg-white/5 p-4 rounded-md">
+			<div class="card bg-neutral-800/5 dark:bg-white/5">
 				<div class="mb-4">
 					<h3 class="font-semibold text-xl mb-4">General</h3>
 				</div>
@@ -85,6 +85,8 @@
 	</div>
 
 	<form action="index.php?action=storeBoard" method="POST" class="grid">
+		<h3 class="font-bold text-xl mb-4">Create New Board</h3>
+
 		<label for="name">Board name:</label>
 		<input
 			type="text"

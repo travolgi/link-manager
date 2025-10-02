@@ -1,8 +1,8 @@
 <div id="newlink-modal" class="fixed inset-0 bg-black/65 p-4 overflow-y-scroll !hidden flex justify-center items-center transition-all">
-	<div class="relative w-3xl dark:bg-neutral-800 dark:text-white/90 py-6 px-4 rounded-md border border-neutral-300 dark:border-white/20">
-		<i id="close-newlink-modal" class="fa-light fa-x text-sm absolute top-3 right-4"></i>
+	<div class="relative w-3xl bg-white dark:bg-neutral-800 dark:text-white/90 py-6 card">
+		<i id="close-newlink-modal" class="fa-light fa-x text-sm absolute top-3 right-4 hover:opacity-65 transition-all"></i>
 		
-		<h2 class="font-bold text-xl mb-4">Create New Link</h2>
+		<h3 class="font-bold text-xl mb-4">Create New Link</h3>
 		<form action="index.php?action=storeLink" method="POST" class="grid">
 			<input
 				type="hidden"

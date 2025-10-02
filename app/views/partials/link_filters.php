@@ -7,7 +7,7 @@
 	/>
 
 	<div>
-		<label for="search" class="text-sm opacity-65">Search by:</label>
+		<label for="search">Search by:</label>
 		<div class="relative">
 			<i class="fa-light fa-search absolute left-2 top-3"></i>
 			<input
@@ -22,7 +22,7 @@
 	</div>
 
 	<div>
-		<label for="orderby" class="text-sm opacity-65">Order by:</label>
+		<label for="orderby">Order by:</label>
 		<?php
 		require __DIR__ . '/field_select_orderby.php';
 		?>

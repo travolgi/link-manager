@@ -20,19 +20,19 @@ require __DIR__ . '/partials/link_filters.php';
 		<p class="text-sm text-black/25 dark:text-white/25 italic">No links.</p>
 	<?php else :?>
 		<?php foreach ($links as $link) : ?>
-			<div class="border border-neutral-300 dark:border-white/20 p-2 rounded-md">
+			<div class="p-2 card">
 				<div class="grid grid-cols-[1fr_1rem_1rem] gap-4 mb-1">
 					<span class="font-semibold text-lg"><?= htmlspecialchars( $link['title'] ) ?></span>
 					
 					<a href="index.php?action=editLink&id=<?= $link['id'] ?>" title="Edit">
-						<i class="fa-light fa-pen"></i>
+						<i class="fa-light fa-pen hover:text-teal-800 transition-all"></i>
 					</a>
 
 					<form action="index.php?action=deleteLink" method="POST" 
 					onsubmit="return confirm('Are you sure you want to delete this link?')">
 						<input type="hidden" name="id" value="<?= $link['id'] ?>">
 						<button type="submit" title="Delete">
-							<i class="fa-light fa-trash text-red-300 hover:text-red-600"></i>
+							<i class="fa-light fa-trash text-red-300 hover:text-red-600 transition-all"></i>
 						</button>
 					</form>
 				</div>
@@ -47,7 +47,7 @@ require __DIR__ . '/partials/link_filters.php';
 					>
 						<?= $url ?>
 					</a>
-					<?php if ( $link['description'] !== '' ) : ?>
+					<?php if ( trim( $link['description'] ) ) : ?>
 						<p><?= htmlspecialchars( $link['description'] ) ?></p>
 					<?php endif; ?>
 					<?php if ( isset($link['board_name']) ) : ?>
@@ -62,6 +62,8 @@ require __DIR__ . '/partials/link_filters.php';
 	</div>
 
 	<form action="index.php?action=storeLink" method="POST" class="grid">
+		<h3 class="font-bold text-xl mb-4">Create New Link</h3>
+
 		<label for="title">Link title:</label>
 		<input
 			type="text"

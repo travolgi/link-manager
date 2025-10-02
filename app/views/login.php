@@ -1,4 +1,4 @@
-<div class="grid mx-auto gap-6 p-6 max-w-sm border border-neutral-300 dark:border-white/20 rounded-md">
+<div class="grid mx-auto gap-6 p-6 max-w-sm card">
 	<h2 class="font-bold text-3xl">Login</h2>
 
 	<?php if( isset($error) ) : ?>

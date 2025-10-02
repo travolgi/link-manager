@@ -33,6 +33,19 @@ class BoardModel extends Model {
 		return $stmt->fetch();
 	}
 
+	public function getTotalBoardsByUser( $user_id ) {
+		$sql = '
+			SELECT
+			COUNT(*)
+			FROM boards
+			WHERE user_id = :user_id
+		';
+		$params = [ 'user_id' => $user_id ];
+		$stmt = $this->dbQuery( $sql, $params );
+
+		return $stmt->fetchColumn();
+	}
+
 	public function getBoardExists($user_id, $name, $slug, $excludeId = null) {
 		$sql = '
 			SELECT id

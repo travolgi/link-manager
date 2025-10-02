@@ -1,4 +1,4 @@
-<a href="index.php?action=showBoards"><i class="fa-light fa-arrow-left"></i> Back</a>
+<a href="index.php?action=showBoards" class="btn-secondary"><i class="fa-light fa-arrow-left"></i> Back</a>
 
 <h2 class="font-bold text-3xl mt-4 mb-6">Edit Board</h2>
 

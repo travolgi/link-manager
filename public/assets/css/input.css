@@ -11,6 +11,11 @@ npx @tailwindcss/cli -i ./public/assets/css/input.css -o ./public/assets/css/sty
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer components {
+	label {
+		font-size: var(--text-sm);
+		opacity: 65%;
+		margin-bottom: --spacing(1);
+	}
 	input,
 	select,
 	textarea {
@@ -43,12 +48,36 @@ npx @tailwindcss/cli -i ./public/assets/css/input.css -o ./public/assets/css/sty
 		border-radius: var(--radius-md);
 		color: var(--color-white);
 		background: var(--color-teal-600);
-		transition-property: all;
-		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-		transition-duration: var(--tw-duration, var(--default-transition-duration));
 
 		@variant hover {
 			background: var(--color-teal-800);
+		}
+	}
+	.btn-secondary {
+		font-size: var(--text-sm);
+		font-weight: var(--font-weight-semibold);
+		opacity: 65%;
+		margin-top: --spacing(4);
+
+		@variant hover {
+			color: var(--color-teal-800);
+		}
+	}
+	.btn,
+	.btn-secondary {
+		transition-property: all;
+		transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+		transition-duration: var(--tw-duration, var(--default-transition-duration));
+	}
+
+	.card {
+		padding: --spacing(4);
+		border-radius: var(--radius-md);
+		border: 1px var(--tw-border-style) ;
+		border-color: var(--color-neutral-300);
+
+		@variant dark {
+			border-color: color-mix(in srgb, #fff 20%, transparent);
 		}
 	}
 }

@@ -41,6 +41,23 @@ class LinkModel extends Model {
 
 		return $stmt->fetchAll();
 	}
+	
+	public function getRecentLinksByUser( $user_id, $limit = 5 ) {
+		$limit = (int)$limit;
+		
+		$sql = "
+			SELECT links.*, boards.name AS board_name
+			FROM links
+			LEFT JOIN boards ON links.board_id = boards.id
+			WHERE links.user_id = :user_id
+			ORDER BY links.created_at DESC
+			LIMIT $limit
+		";
+		$params = [ 'user_id' => $user_id ];    
+		$stmt = $this->dbQuery( $sql, $params );
+
+		return $stmt->fetchAll();
+	}
 
 	public function getLinksByBoard( $user_id, $board_id = null ) {
 		$sql = '
@@ -77,6 +94,37 @@ class LinkModel extends Model {
 		$stmt = $this->dbQuery( $sql, $params );
 
 		return $stmt->fetch();
+	}
+
+	public function getTotalLinksByUser( $user_id ) {
+		$sql = '
+			SELECT
+			COUNT(*)
+			FROM links
+			WHERE links.user_id = :user_id
+		';
+		$params = [ 'user_id' => $user_id ];
+		$stmt = $this->dbQuery( $sql, $params );
+
+		return $stmt->fetchColumn();
+	}
+
+	public function getAvgLinksPerBoardByUser( $user_id ) {
+		$sql = '
+			SELECT
+			AVG(link_count)
+			FROM (
+				SELECT
+				COUNT(*) AS link_count
+				FROM links
+				WHERE links.user_id = :user_id
+				GROUP BY links.board_id
+			) total
+		';
+		$params = [ 'user_id' => $user_id ];
+		$stmt = $this->dbQuery( $sql, $params );
+
+		return round( $stmt->fetchColumn(), 1 );
 	}
 
 	// create
