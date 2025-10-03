@@ -5,6 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../models/UserModel.php';
+require_once __DIR__ . '/../helpers/Security.php';
 require_once __DIR__ . '/../helpers/current_user_id.php';
 
 class Controller {
@@ -26,6 +27,14 @@ class Controller {
 		if ( !isset($_SESSION['user_id']) ) {
 			header('Location: index.php?action=showLogin');
 			exit;
+		}
+	}
+
+	// check if the csrf token is correct
+	protected function checkCsrfToken() {
+		$csrf_token = $_POST['csrf_token'] ?? '';
+		if ( !Security::validateCsrfToken($csrf_token) ) {
+			die('CSRF validation failed.');
 		}
 	}
 

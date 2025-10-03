@@ -4,6 +4,8 @@
 		
 		<h3 class="font-bold text-xl mb-4">Create New Link</h3>
 		<form action="index.php?action=storeLink" method="POST" class="grid">
+		 	<?= Security::csrfField() ?>
+		
 			<input
 				type="hidden"
 				name="redirect_to"

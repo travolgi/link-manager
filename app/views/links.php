@@ -30,6 +30,7 @@ require __DIR__ . '/partials/link_filters.php';
 
 					<form action="index.php?action=deleteLink" method="POST" 
 					onsubmit="return confirm('Are you sure you want to delete this link?')">
+						<?= Security::csrfField() ?>
 						<input type="hidden" name="id" value="<?= $link['id'] ?>">
 						<button type="submit" title="Delete">
 							<i class="fa-light fa-trash text-red-300 hover:text-red-600 transition-all"></i>
@@ -63,6 +64,8 @@ require __DIR__ . '/partials/link_filters.php';
 
 	<form action="index.php?action=storeLink" method="POST" class="grid">
 		<h3 class="font-bold text-xl mb-4">Create New Link</h3>
+
+		<?= Security::csrfField() ?>
 
 		<label for="title">Link title:</label>
 		<input

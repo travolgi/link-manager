@@ -11,6 +11,8 @@
 	<?php endif; ?>
 
 	<form action="index.php?action=login" method="POST" class="grid gap-2">
+		<?= Security::csrfField() ?>
+
 		<label for="email">Email:</label>
 		<input
 			type="email"

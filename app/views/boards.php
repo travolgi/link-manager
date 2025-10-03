@@ -28,7 +28,8 @@
 
 						<form action="index.php?action=deleteBoard" method="POST" 
 						onsubmit="return confirm('Are you sure you want to delete this board?')">
-							<input type="hidden" name="id" value="<?= $board['id'] ?>">
+						<?= Security::csrfField() ?>	
+						<input type="hidden" name="id" value="<?= $board['id'] ?>">
 							<button type="submit" title="Delete">
 								<i class="fa-light fa-trash text-red-300 hover:text-red-600 transition-all"></i>
 							</button>
@@ -86,6 +87,8 @@
 
 	<form action="index.php?action=storeBoard" method="POST" class="grid">
 		<h3 class="font-bold text-xl mb-4">Create New Board</h3>
+
+		<?= Security::csrfField() ?>
 
 		<label for="name">Board name:</label>
 		<input

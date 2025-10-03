@@ -35,6 +35,7 @@ class BoardController extends Controller {
 	// create new board
 	public function storeBoard() {
 		$this->requireLogin();
+		$this->checkCsrfToken();
 
 		$boardName = trim($_POST['name'] ?? '');
 
@@ -79,6 +80,7 @@ class BoardController extends Controller {
 	// update board
 	public function updateBoard() {
 		$this->requireLogin();
+		$this->checkCsrfToken();
 
 		$boardId = (int) $_POST['id'] ?? 0;
 		$boardName = trim($_POST['name'] ?? '');
@@ -117,6 +119,7 @@ class BoardController extends Controller {
 	// delete board
 	public function deleteBoard() {
 		$this->requireLogin();
+		$this->checkCsrfToken();
 
 		$id = (int) $_POST['id'] ?? 0;
 

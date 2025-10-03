@@ -52,6 +52,7 @@ class LinkController extends Controller {
 	// create new link
 	public function storeLink() {
 		$this->requireLogin();
+		$this->checkCsrfToken();
 
 		$title = trim($_POST['title'] ?? '');
 		$url = $this->validateUrlLink( trim($_POST['url'] ?? '') );
@@ -112,6 +113,7 @@ class LinkController extends Controller {
 	// update link
 	public function updateLink() {
 		$this->requireLogin();
+		$this->checkCsrfToken();
 
 		$id = (int) $_POST['id'] ?? 0;
 		$title = trim($_POST['title'] ?? '');
@@ -157,6 +159,7 @@ class LinkController extends Controller {
 	// delete link
 	public function deleteLink() {
 		$this->requireLogin();
+		$this->checkCsrfToken();
 
 		$linkId = (int) $_POST['id'] ?? 0;
 

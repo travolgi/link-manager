@@ -12,6 +12,8 @@ class AuthController extends Controller {
 
 	// user login
 	public function login() {
+		$this->checkCsrfToken();
+
 		$email = trim($_POST['email'] ?? '');
 		$password = $_POST['password'] ?? '';
 		$user = $this->userModel->login($email, $password);
@@ -29,6 +31,8 @@ class AuthController extends Controller {
 
 	// user registration
 	public function register() {
+		$this->checkCsrfToken();
+		
 		$username = trim($_POST['username'] ?? '');
 		$email = trim($_POST['email'] ?? '');
 		$password = $_POST['password'] ?? '';

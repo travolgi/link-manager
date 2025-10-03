@@ -11,6 +11,8 @@
 <?php endif; ?>
 
 <form action="index.php?action=updateBoard" method="POST" class="grid">
+	<?= Security::csrfField() ?>
+
 	<input type="hidden" name="id" value="<?= $board['id'] ?>">
 
 	<label for="name">Board name:</label>

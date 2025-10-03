@@ -4,6 +4,7 @@ A lightweight PHP MVC application for managing boards and links.
 Includes **registration** system, **protected login**, **private dashboard** and CRUD management of boards, links and tags.
 This project demonstrates a simple yet structured approach to full-stack development using an MVC architecture.
 
+![Link Manager App](./screenshot.webp)
 
 ## Table of contents
 
@@ -94,6 +95,7 @@ This project demonstrates a simple yet structured approach to full-stack develop
 |  |  │
 |  |  ├── helpers/
 |  |  │   ├── date_format.php                # Format date
+|  |  │   ├── Security.php                   # Csrf token for form
 |  |  │   ├── slugify.php                    # Create slug from string
 |  |  │   └── current_user_id.php            # Get current user ID from session
 |  |  │

@@ -11,6 +11,8 @@
 <?php endif; ?>
 
 <form action="index.php?action=updateLink" method="POST" class="grid">
+	<?= Security::csrfField() ?>
+
 	<input type="hidden" name="id" value="<?= $link['id'] ?>">
 
 	<label for="title">Link title:</label>
