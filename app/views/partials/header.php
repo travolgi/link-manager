@@ -34,13 +34,9 @@
 						<a href="#" class="btn open-newlink-modal" data-board-id=""><i class="fa-light fa-plus"></i> New Link</a>
 					</li>
 					<li>
-						<a href="#" class="hover:text-teal-800 transition-all">
-							<i class="fa-light fa-user px-2"></i>
-							User: <?= htmlspecialchars( $currentUser['username'] ) ?>
+						<a href="index.php?action=showProfile" class="hover:text-teal-800 transition-all">
+							<i class="fa-light fa-user px-2"></i> <?= htmlspecialchars( $currentUser['username'] ) ?>
 						</a>
-					</li>
-					<li>
-						<a href="index.php?action=logout" class="hover:text-teal-800 transition-all">Logout</a>
 					</li>
 				<?php else : ?>
 					<li>

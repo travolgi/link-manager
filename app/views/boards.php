@@ -26,8 +26,7 @@
 							<i class="fa-light fa-pen hover:text-teal-800 transition-all"></i>
 						</a>
 
-						<form action="index.php?action=deleteBoard" method="POST" 
-						onsubmit="return confirm('Are you sure you want to delete this board?')">
+						<form action="index.php?action=deleteBoard" method="POST" onsubmit="return confirm('Are you sure you want to delete this board?')">
 						<?= Security::csrfField() ?>	
 						<input type="hidden" name="id" value="<?= $board['id'] ?>">
 							<button type="submit" title="Delete">

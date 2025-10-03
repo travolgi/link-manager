@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . '/../core/Model.php';
+require_once __DIR__ . '/../helpers/hash_string.php';
 
 class UserModel extends Model {
-	// user registration
-	public function register($username, $email, $password) {
-		// check if the user exists
+	// check if the user exists
+	public function userExists($username, $email, $excludeId = null) {
 		$sql = '
 			SELECT id
 			FROM users
@@ -15,16 +15,25 @@ class UserModel extends Model {
 			'username' => $username,
 			'email' => $email
 		];
+		if ( $excludeId ) {
+			$sql .= ' AND id != :id';
+			$params['id'] = $excludeId;
+	  	}
 		$stmt = $this->dbQuery($sql, $params);
-		$userExists = $stmt->fetch();
-
+		
+		return $stmt->fetch();
+	}
+	
+	// user registration
+	public function register($username, $email, $password) {
+		$userExists = $this->userExists( $username, $email );
 		if ( $userExists ) {
 			return false;
 		}
 
+		$hashedPw = hashString( $password );
+		
 		// create new user
-		$hashedPw = password_hash($password, PASSWORD_DEFAULT);
-
 		$sql = '
 			INSERT INTO users (username, email, password)
 			VALUES (:username, :email, :password)
@@ -69,5 +78,68 @@ class UserModel extends Model {
 		$stmt = $this->dbQuery($sql, $params);
 		
 		return $stmt->fetch();
+	}
+
+	public function getPwUserById($user_id) {
+		$sql = "
+			SELECT password 
+			FROM users 
+			WHERE id = :user_id 
+			LIMIT 1
+		";
+		$params = ['user_id' => $user_id];
+		$stmt = $this->dbQuery($sql, $params);
+		
+		return $stmt->fetchColumn();
+	}
+
+	public function updateUser( $username, $email, $user_id ) {
+		$userExists = $this->userExists( $username, $email, $user_id );
+		if ( $userExists ) {
+			return false;
+		}
+
+		$sql = "
+			UPDATE users
+			SET username = :username, email = :email, updated_at = NOW()
+			WHERE id = :user_id
+			LIMIT 1
+		";
+		$params = [
+			'username' => $username, 
+			'email' => $email, 
+			'user_id' => $user_id
+		];
+
+		return $this->dbQuery($sql, $params);
+	}
+
+	public function updatePassword($password, $user_id) {
+		$hashedPw = hashString( $password );
+
+		$sql = "
+			UPDATE users
+			SET password = :password, updated_at = NOW()
+			WHERE id = :user_id
+			LIMIT 1
+		";
+		$params = [
+			'password' => $hashedPw,
+			'user_id' => $user_id
+		];
+
+		return $this->dbQuery($sql, $params);
+	}
+
+	public function deleteUser($user_id) {
+		$sql = "
+			DELETE
+			FROM users 
+			WHERE id = :user_id 
+			LIMIT 1
+		";
+		$params = ['user_id' => $user_id];
+
+		return $this->dbQuery($sql, $params);
 	}
 }

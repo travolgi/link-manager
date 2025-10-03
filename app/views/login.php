@@ -10,6 +10,10 @@
 		<?php unset($_SESSION['register-user-success']); ?>
 	<?php endif; ?>
 
+	<?php if( isset( $_GET['message'] ) ) : ?>
+		<p class="text-green-600"><?= $_GET['message'] ?></p>
+	<?php endif; ?>
+
 	<form action="index.php?action=login" method="POST" class="grid gap-2">
 		<?= Security::csrfField() ?>
 
@@ -30,7 +34,7 @@
 			placeholder="Password"
 			required
 		/>
-		
+
 		<button type="submit" class="btn mb-4">Login</button>
 
 		<p>Don't have an account? <a href="index.php?action=showRegister" class="text-teal-600 font-semibold transition-all">Register now</a></p>

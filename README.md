@@ -25,8 +25,8 @@ This project demonstrates a simple yet structured approach to full-stack develop
 
 - User Registration & Login System (with session handling)
 - Protected Dashboard accessible only to authenticated users
-- Board, Link and Tag Management (create, read, update, delete)
-- Keyword search and sorting filters
+- Account, Board, Link and Tag Management (create, read, update, delete)
+- Links keyword search and sorting filters
 - Clean MVC structure for easy maintainability
 - Dark/light UI theme saved on localstorage
 
@@ -95,6 +95,7 @@ This project demonstrates a simple yet structured approach to full-stack develop
 |  |  │
 |  |  ├── helpers/
 |  |  │   ├── date_format.php                # Format date
+|  |  │   ├── hash_string.php                # hash string like password
 |  |  │   ├── Security.php                   # Csrf token for form
 |  |  │   ├── slugify.php                    # Create slug from string
 |  |  │   └── current_user_id.php            # Get current user ID from session
@@ -113,12 +114,15 @@ This project demonstrates a simple yet structured approach to full-stack develop
 |  |      |   ├── link_filters.php           # Filters component
 |  |      |   └── link_modal.php             # Modal create link
 |  |      ├── boards.php                     # Boards page
+|  |      ├── change_password.php            # Change password page
 |  |      ├── dashboard.php                  # Dashboard page
 |  |      ├── edit_board.php                 # Edit board page
 |  |      ├── edit_link.php                  # Edit link page
+|  |      ├── edit_profile.php               # Edit account page
 |  |      ├── layout.php                     # Main layout
 |  |      ├── links.php                      # Links page
 |  |      ├── login.php                      # Login page
+|  |      ├── profile.php                    # Account page
 |  |      └── register.php                   # Register page
 |  |   
 │	├── node_modules/
@@ -143,7 +147,7 @@ This project demonstrates a simple yet structured approach to full-stack develop
 ## Usage and system logic
 
 - Register a new account or log in with existing credentials.
-- Access the dashboard to manage your links, tags and boards.
+- Access the dashboard to manage your account, links, tags and boards.
 - Logout when finished.
 
 [UX processes and system logic - FigJam](https://www.figma.com/community/file/1550187983633712159)

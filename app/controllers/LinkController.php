@@ -49,6 +49,17 @@ class LinkController extends Controller {
 		]);
 	}
 
+	public function validateLinkData( $title, $url ) {
+		$errors = [];
+		if ( $title === '' ) {
+			$errors['title'] = 'Title fields is required.';
+		}
+		if ( !filter_var($url, FILTER_VALIDATE_URL) ) {
+			$errors['url'] = 'Invalid URL format.';
+		}
+		return join('<br>', $errors);
+	}
+
 	// create new link
 	public function storeLink() {
 		$this->requireLogin();
@@ -60,12 +71,9 @@ class LinkController extends Controller {
 		$board_id = (int) $_POST['board'] ?? 0;
 		$redirect_to = $_POST['redirect_to'] ?? 'links';
 
-		if (!filter_var($url, FILTER_VALIDATE_URL)) {
-			$this->showLinks('Invalid URL format.');
-			exit;
-		}
-		if ( $title === '' ) {
-			$this->showLinks('Title fields is required.');
+		$errors = $this->validateLinkData( $title, $url );
+		if ( !empty($errors) ) {
+			$this->showLinks($errors);
 			exit;
 		}
 
@@ -126,13 +134,7 @@ class LinkController extends Controller {
 			exit;
 		}
 
-		$errors = [];
-		if ( $title === '' ) {
-			$errors['title'] = 'Title fields is required.';
-		}
-		if ( !filter_var($url, FILTER_VALIDATE_URL) ) {
-			$errors['url'] = 'Invalid URL format.';
-		}
+		$errors = $this->validateLinkData( $title, $url );
 		if ( !empty($errors) ) {
 			$_SESSION['errors'] = $errors;
 			$_SESSION['old'] = $_POST;
@@ -148,7 +150,7 @@ class LinkController extends Controller {
 			header('Location: index.php?action=showLinks');
 			exit;
 		} else {
-			$_SESSION['errors'] = ['Update error.'];
+			$_SESSION['errors'] = 'Update error.';
 			$_SESSION['old'] = $_POST;
 
 			header("Location: index.php?action=editLink&id=$id");

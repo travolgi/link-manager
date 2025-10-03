@@ -15,25 +15,32 @@ $controllers = [
 
 // routing
 $routes = [
-	'showLogin'    => ['auth', 'showLogin', false, 'showDashboard', true],
-	'login'        => ['auth', 'login', true, 'showLogin'],
-	'showRegister' => ['auth', 'showRegister', false, 'showDashboard', true],
-	'register'     => ['auth', 'register', true, 'showRegister'],
-	'logout'       => ['auth', 'logout', false],
+	'showLogin'      => ['auth', 'showLogin', false, 'showDashboard', true],
+	'login'          => ['auth', 'login', true, 'showLogin'],
+	'showRegister'   => ['auth', 'showRegister', false, 'showDashboard', true],
+	'register'       => ['auth', 'register', true, 'showRegister'],
+	'logout'         => ['auth', 'logout', false],
 
-	'dashboard'    => ['dashboard', 'showDashboard', false],
+	'showProfile'    => ['auth', 'showProfile', false],
+	'changePassword' => ['auth', 'showChangePassword', false],
+	'editProfile'    => ['auth', 'showEditProfile', false],
+	'updateProfile'  => ['auth', 'updateProfile', true, 'showProfile'],
+	'updatePassword' => ['auth', 'updatePassword', true, 'showProfile'],
+	'deleteProfile'  => ['auth', 'deleteProfile', true],
 
-	'showBoards'   => ['board', 'showBoards', false],
-	'storeBoard'   => ['board', 'storeBoard', true, 'showBoards'],
-	'editBoard'    => ['board', 'editBoard', false],
-	'updateBoard'  => ['board', 'updateBoard', true, 'editBoard'],
-	'deleteBoard'  => ['board', 'deleteBoard', true, 'showBoards'],
+	'dashboard'      => ['dashboard', 'showDashboard', false],
 
-	'showLinks'    => ['link', 'showLinks', false],
-	'storeLink'    => ['link', 'storeLink', true, 'showLinks'],
-	'editLink'     => ['link', 'editLink', false],
-	'updateLink'   => ['link', 'updateLink', true, 'editLink'],
-	'deleteLink'   => ['link', 'deleteLink', true, 'showLinks'],
+	'showBoards'     => ['board', 'showBoards', false],
+	'storeBoard'     => ['board', 'storeBoard', true, 'showBoards'],
+	'editBoard'      => ['board', 'editBoard', false],
+	'updateBoard'    => ['board', 'updateBoard', true, 'editBoard'],
+	'deleteBoard'    => ['board', 'deleteBoard', true, 'showBoards'],
+
+	'showLinks'      => ['link', 'showLinks', false],
+	'storeLink'      => ['link', 'storeLink', true, 'showLinks'],
+	'editLink'       => ['link', 'editLink', false],
+	'updateLink'     => ['link', 'updateLink', true, 'editLink'],
+	'deleteLink'     => ['link', 'deleteLink', true, 'showLinks'],
 ];
 
 $action = $_GET['action'] ?? '';

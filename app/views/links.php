@@ -9,8 +9,10 @@
 	<?php unset($_SESSION['link-crud-success']); ?>
 <?php endif; ?>
 
-<?php 
-require __DIR__ . '/partials/link_filters.php';
+<?php
+if ( !empty( $links ) ) {
+	require __DIR__ . '/partials/link_filters.php';
+}
 ?>
 
 <div class="grid md:grid-cols-2 items-start gap-6">
@@ -28,8 +30,7 @@ require __DIR__ . '/partials/link_filters.php';
 						<i class="fa-light fa-pen hover:text-teal-800 transition-all"></i>
 					</a>
 
-					<form action="index.php?action=deleteLink" method="POST" 
-					onsubmit="return confirm('Are you sure you want to delete this link?')">
+					<form action="index.php?action=deleteLink" method="POST" onsubmit="return confirm('Are you sure you want to delete this link?')">
 						<?= Security::csrfField() ?>
 						<input type="hidden" name="id" value="<?= $link['id'] ?>">
 						<button type="submit" title="Delete">

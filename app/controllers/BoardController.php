@@ -91,7 +91,7 @@ class BoardController extends Controller {
 		}
 		$errors = [];
 		if ( $boardName === '' ) {
-			$errors['name'] = 'Board name fields is required.';
+			$errors = 'Board name fields is required.';
 		}
 		if ( !empty($errors) ) {
 			$_SESSION['errors'] = $errors;
@@ -108,7 +108,7 @@ class BoardController extends Controller {
 			header('Location: index.php?action=showBoards');
 			exit;
 		} else {
-			$_SESSION['errors'] = ['Board name or slug already exists.'];
+			$_SESSION['errors'] = 'Board name or slug already exists.';
 			$_SESSION['old'] = $_POST;
  
 			header("Location: index.php?action=editBoard&id=$boardId");

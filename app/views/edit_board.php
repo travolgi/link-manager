@@ -3,7 +3,7 @@
 <h2 class="font-bold text-3xl mt-4 mb-6">Edit Board</h2>
 
 <?php if( isset($_SESSION['errors']) ) : ?>
-	<p class="text-red-600 mb-6"><?= join( "<br>", $_SESSION['errors'] ) ?></p>
+	<p class="text-red-600 mb-6"><?= $_SESSION['errors'] ?></p>
 	<?php
 		unset($_SESSION['errors']);
 		unset($_SESSION['old']);
