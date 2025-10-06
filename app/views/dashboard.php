@@ -13,7 +13,10 @@
 		<div class="card">
 			<h4 class="opacity-65 mb-2">Total Boards</h4>
 			<span class="block text-center font-bold text-5xl"><?= $stats['total_boards'] ?></span>
-			<a href="index.php?action=showBoards" class="btn-secondary float-end"><i class="fa-light fa-eye"></i> All Boards</a>
+			<div class="flex flex-wrap items-center justify-end gap-2 mt-4">
+				<a href="#" class="btn-secondary mt-0 open-board-modal"><i class="fa-light fa-plus"></i> New Board</a>
+				<a href="index.php?action=showBoards" class="btn-secondary mt-0"><i class="fa-light fa-eye"></i> All Boards</a>
+			</div>
 		</div>
 
 		<div class="card">

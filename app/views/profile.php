@@ -12,7 +12,7 @@
 		<?php unset($_SESSION['profile-crud-success']); ?>
 	<?php endif; ?>
 
-	<div class="card grid md:grid-cols-2 items-start gap-4 mb-10">
+	<div class="card grid md:grid-cols-2 items-start gap-12 mb-10">
 		<div>
 			<h4 class="opacity-65">Your Username</h4>
 			<div class="text-lg"><?= htmlspecialchars( $currentUser['username'] ) ?></div>
@@ -24,8 +24,8 @@
 			<a href="index.php?action=changePassword" class="text-lg hover:text-teal-800 transition-all"><i class="fa-light fa-key mr-2"></i>Change password</a>
 		</div>
 
-		<div class="grid md:justify-self-end space-y-10">
-			<a href="index.php?action=logout" class="btn-secondary text-base">
+		<div class="flex flex-row md:flex-col items-center justify-center md:justify-self-end gap-12">
+			<a href="index.php?action=logout" class="btn-secondary m-0 text-base">
 				<i class="fa-light fa-arrow-right-from-bracket"></i> Logout
 			</a>
 			<a href="index.php?action=editProfile" class="btn">

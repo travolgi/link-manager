@@ -84,12 +84,11 @@ class LinkController extends Controller {
 			if ( $redirect_to === 'boards') {
 				$_SESSION['board-crud-success'] = $message;
 				header('Location: index.php?action=showBoards');
-				exit;
 			} else {
 				$_SESSION['link-crud-success'] = $message;
 				header('Location: index.php?action=showLinks');
-				exit;
 			}
+			exit;
 		} else {
 			$this->showLinks('Error.');
 		}

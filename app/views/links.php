@@ -10,15 +10,15 @@
 <?php endif; ?>
 
 <?php
-if ( !empty( $links ) ) {
+if ( !empty( $links ) || !empty( $_GET['search'] ) ) {
 	require __DIR__ . '/partials/link_filters.php';
 }
 ?>
 
-<div class="grid md:grid-cols-2 items-start gap-6">
+<div class="grid md:grid-cols-2 items-start gap-12 md:gap-6">
 	<div class="space-y-2">
 
-	<?php if ( empty($links) ) : ?>
+	<?php if ( empty($links) && empty( $_GET['search'] ) ) : ?>
 		<p class="text-sm text-black/25 dark:text-white/25 italic">No links.</p>
 	<?php else :?>
 		<?php foreach ($links as $link) : ?>

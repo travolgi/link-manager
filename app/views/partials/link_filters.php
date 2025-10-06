@@ -1,4 +1,4 @@
-<form action="index.php" method="GET" class="flex items-end gap-4 mb-4">
+<form action="index.php" method="GET" class="flex flex-wrap items-end gap-x-4 mb-4">
 	<input
 		type="hidden"
 		name="action"

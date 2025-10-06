@@ -2,6 +2,7 @@
 
 	<?php
 	require __DIR__ . '/link_modal.php';
+	require __DIR__ . '/board_modal.php';
 	?>
 
 	<footer class="border-t border-neutral-300 dark:border-white/20 p-4 flex items-center justify-center">
