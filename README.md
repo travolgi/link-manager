@@ -6,7 +6,6 @@ This project demonstrates a simple yet structured approach to full-stack develop
 
 ![Link Manager App](./screenshot.webp)
 
-*This app is currently under development - Final result on this [figma design](#)*
 
 ## Table of contents
 
